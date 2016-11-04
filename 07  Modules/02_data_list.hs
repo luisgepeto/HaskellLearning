@@ -101,3 +101,73 @@ demo43 = notElem 4 [1,2,3]
 --partition takes a list and predicate and returns pair of lists
 --first list matches the predicate and second doesnt
 demo44 = partition (`elem` ['A'..'Z'])  "BOBsidneyMORGANeddy"  
+
+--find takes a list and a predicate and returns the first occurrence
+-- it is a Maybe value (kind of nullable)
+demo45 = find (>4) [1,2,3,4,5,6]  
+demo46 = find (>9) [1,2,3,4,5,6]
+
+--elemIndex is just like elem but returns the index or nothing
+demo47 = elemIndex 4 [1,2,3,4,5,6]
+demo48 = elemIndex 10 [1,2,3,4,5,6]
+
+--elemIndices is like elemIndex bur searches the whole list form ultiple times
+demo49 = elemIndices ' ' "Where are the spaces?"
+
+--findIndex and findIndices is like find but returns the index
+demo50 = findIndex (==4) [5,3,2,1,6,4]
+demo51 = findIndex (==7) [5,3,2,1,6,4]
+demo52 = findIndices (`elem` ['A' .. 'Z']) "Where Are The Caps?"
+
+--we can zip multiple lists with zip3 until zip7
+demo53 = zipWith3 (\x y z -> x+y+z) [1,2,3] [4,5,2,2] [2,2,3]  
+demo54 = zip4 [2,3,3] [2,2,2] [5,5,3] [2,2,2]  
+
+--lines lets us separate into an array of input
+demo55 = lines "first line\nsecond line\nthird line"
+--unlines joins a list of strings with a \n
+demo56 = unlines ["first line", "second line", "third line"]  
+--words do the same but with spaces
+demo57 = words "hey these are      the words in this\nsentence"  
+--unwords is inverse to words
+demo58 = unwords ["hey","there","mate"]    
+
+--nub takes duplicated elements from the list
+demo59 = nub [1,2,3,4,3,2,1,2,3,4,3,2,1]  
+demo60 = nub "Lots of words and stuff"  
+
+--delete takes an element and deletes the firs occurrence in a list
+demo61 = delete 'h' "hello there"
+
+-- \\ is the list difference 
+demo62 = (\\) [1..10] [2,5,9] 
+
+--joins two lists (removes repeated elements from second list)
+demo63 = union "hey man" "man whats up man"
+demo64 = union [1..7] [5..10]
+
+--intersect two lists and get only elements present in both
+demo65 = intersect [1..7] [5..10]
+
+--insert inserts in order of magnitude in a list
+demo66 = insert 4 [3,5,1,2,8,2]
+demo67 = insert 4 [1,2,4,3,2,1]
+
+
+--length, take, drop, splitAt !! and replicate take an Int as a paramter
+--sometimes we need more generic and thats why we have:
+--genericLength, generickTake, genericDrop, genericSplitAt, genericIndex, genericReplicate
+--we cannot calculate average with a length but we can with a genericLength
+--failedAverage = (\xs -> sum xs / length xs) [1..6]
+average = (\xs -> sum xs / genericLength xs) [1..6]
+
+--There is also more generic functions for nub delete union intersect and group
+--they are nubBy deleteBy unionBy and groupBy
+--these take a function to determine the equality of two elements
+demo68 =  groupBy (\x y -> (x > 0) == (y > 0)) [-4.3, -2.4, -1.2, 0.4, 2.3, 5.9, 10.5, 29.1, 5.3, -2.4, -14.5, 2.9, 2.3]
+demo69 =  nubBy (\x y -> abs x == abs y) [1,2,3, -1,-2,-3]
+
+
+--in a similar fashion, we have genreric functions as sort, insert, maximum and minimum
+-- sortBy insertBy maximumBy minimumBy
+demo70 = sortBy (\x y -> compare (length x) (length y)) [[5,4,5,4,4],[1,2,3],[3,5,4,3],[],[2],[2,2]]
