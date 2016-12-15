@@ -30,3 +30,24 @@ demo6 = threeCoins $ mkStdGen 22
 demo7 = take 5 $ randoms (mkStdGen 11) :: [Int]
 demo8 = take 5 $ randoms (mkStdGen 11) :: [Bool]
 demo9 = take 5 $ randoms (mkStdGen 11) :: [Float]
+
+--this function doesnt return a generator because its infinite
+--we can accomplish that as follows
+finiteRandoms :: (RandomGen g, Random a, Num n, Eq n) => n -> g -> ([a], g)
+finiteRandoms 0 gen = ([], gen)
+finiteRandoms n gen =
+    let (value, newGen) = random gen
+        (restOfList, finalGen) = finiteRandoms (n-1) newGen
+    in (value:restOfList, finalGen)
+
+demo10 = finiteRandoms 3 (mkStdGen 10) :: ([Int], StdGen)
+
+--randomR gets a random from a range
+--randomR :: (RandomGen g, Random a) => (a,a) -> g -> (a, g)
+demo11 = randomR (1,6) (mkStdGen 359353) :: (Int, StdGen)
+--we can also produce a stream of randomRs
+demo12 = take 10 $ randomRs (1,6) (mkStdGen 35935335) :: [Int]
+demo13 = take 10 $ randomRs ('a','z') (mkStdGen 3) :: [Char]
+
+
+ 
